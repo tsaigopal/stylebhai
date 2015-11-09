@@ -1,0 +1,22 @@
+ <Composite id="this" layout="GridLayout(2,false)">
+	<Label style="LEFT" text="Id" />
+	<Label id="lblCustId" style="LEFT"/>
+	<Label style="LEFT" text="Name" />
+	<Text id="txtName" style="LEFT,BORDER"/>
+	<Label style="LEFT" text="Address"/>
+	<Text id="txtAddress" style="LEFT,BORDER"/>
+	<Label style="LEFT" text="Date of Birth"/>
+	<DateTime id="dtDob" style="DATE,DROP_DOWN"/>
+	<Label style="LEFT" text="Pending"/>
+	<Label id="lblPending" style="LEFT"/>
+	<Label style="LEFT" text=""/>
+	<Button id="btnSave" style="PUSH" text="Save"/>
+	<Table id="tblInvoices" style="FULL_SELECTION"
+		headerVisible="true" layoutData="GridData(4,4,true,true,2,1)"
+		linesVisible="true">
+		<TableColumn data="data" text="Date" width="120" />
+		<TableColumn data="status" text="Status" width="170" />
+		<TableColumn data="roundedAmount" text="Amount" width="170" />
+		<TableColumn data="pendingAmount" text="Pending" width="170" />
+	</Table>
+</Composite>

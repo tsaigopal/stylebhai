@@ -1,0 +1,6 @@
+<Composite id="this" layout="GridLayout(2,false)">
+	<Label style="LEFT" text="UserId" />
+	<Text id="txtUser" style="LEFT,BORDER"/>
+	<Label style="LEFT" text="Password"/>
+	<Text id="txtPassword" style="LEFT,BORDER"/>
+</Composite>

@@ -1,0 +1,16 @@
+<Screen layout="GridLayout(2,false)">
+	<Label id="lblName" style="LEFT" text="Name" size="[50,20]"/>
+	<Text id="txtName" style="LEFT,BORDER" size="[80,20]"/>
+	<Label id="lblAddress" style="LEFT" text="Address" size="[50,20]"/>
+	<Text id="txtAddress" style="LEFT" size="[80,20]"/>
+	<Label id="lblPending" style="LEFT" text="Pending" size="[50,20]"/>
+	<Button id="txtPending" style="CHECK"/>
+	<Label id="lblBlank1" style="LEFT"/>
+	<Button id="btnSearch" style="PUSH" text="Search" size="[50,20]"/>
+	<Table id="tblCustomers" style="FULL_SELECTION" size="[300,120] headerVisible="true"
+		 layoutData="GridData(4,4,true,true,2,1)" linesVisible="true">
+		<TableColumn property="name" text="Name" width="120"/>	
+		<TableColumn property="address" text="Address" width="170"/>	
+		<TableColumn property="balance" text="Name" width="170"/>	
+	</Table>
+</Screen>

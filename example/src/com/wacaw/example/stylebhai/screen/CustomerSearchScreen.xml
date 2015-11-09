@@ -1,0 +1,17 @@
+<Composite layout="GridLayout(2,false)">
+	<Label style="LEFT" text="Name" />
+	<Text id="txtName" style="LEFT,BORDER"/>
+	<Label style="LEFT" text="Address"/>
+	<Text id="txtAddress" style="LEFT,BORDER"/>
+	<Label style="LEFT" text="Pending"/>
+	<Button id="btnPending" style="CHECK" />
+	<Label style="LEFT" text=""/>
+	<Button id="btnSearch" style="PUSH" text="Search"/>
+	<Table id="tblCustomers" style="FULL_SELECTION"
+		headerVisible="true" layoutData="GridData(4,4,true,true,2,1)"
+		linesVisible="true">
+		<TableColumn data="name" text="Name" width="120" />
+		<TableColumn data="address" text="Address" width="170" />
+		<TableColumn data="balance" text="Balance" width="170" />
+	</Table>
+</Composite>

@@ -1,0 +1,8 @@
+<Screen>
+	<Shell text="New Store" size="[500,300]"/>
+	<ToolBar>
+		<ToolBar class="com.wacaw.example.stylebhai.screen.CustomerSearchScreen" text="Customer Search" image="custsearch.gif"/>
+		<ToolBar class="com.wacaw.example.stylebhai.screen.CustomerDetailScreen" text="New Customer" image="cust.png"/>
+	</ToolBar>
+	<Content/>
+</Screen>
