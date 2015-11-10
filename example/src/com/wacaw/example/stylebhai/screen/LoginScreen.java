@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.wacaw.example.stylebhai.entity.User;
 import com.wacaw.example.stylebhai.service.LoginService;
 import com.wacaw.stylebhai.core.AbstractScreen;
-import com.wacaw.stylebhai.util.Logger;
 import com.wacaw.stylebhai.widget.TextBox;
 
 public class LoginScreen extends AbstractScreen {

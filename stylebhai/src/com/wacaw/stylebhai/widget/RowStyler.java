@@ -1,5 +1,4 @@
 package com.wacaw.stylebhai.widget;
-import org.eclipse.swt.widgets.TableItem;
 
 
 /**
@@ -8,8 +7,9 @@ import org.eclipse.swt.widgets.TableItem;
  * TODO move to swt package
  * @author saigopal
  *
+ * @param <C> control representing a table row.
  * @param <T> type handled by the table
  */
-public interface RowStyler<T> {
-	void setStyle(TableItem item, T object);
+public interface RowStyler<C, T> {
+	void setStyle(C item, T object);
 }

@@ -25,7 +25,7 @@ public class CustomerSearchScreen extends AbstractScreen {
 	private TextBox txtName;
 	private TextBox txtAddress;
 	private Button btnPending;
-	private TableModel<Customer> tblCustomers;
+	private TableModel<?, Customer> tblCustomers;
 	
 	public void initialize(Object...params) {
 	}

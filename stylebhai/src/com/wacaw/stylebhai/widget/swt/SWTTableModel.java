@@ -29,11 +29,11 @@ import com.wacaw.stylebhai.widget.TableModel;
  *
  * @param <T> type of objects in the model
  */
-public class SWTTableModel<T> implements TableModel<T> {
+public class SWTTableModel<T> implements TableModel<TableItem, T> {
 	Table table;
 	boolean[] editableColumns = null;
 	List<T> objectsInView;
-	RowStyler<T> rowStyler;
+	RowStyler<TableItem, T> rowStyler;
 	
 	AbstractTableEditorListener tableEditorListener;
 	private PropertyChangeListener changeListner;
@@ -42,14 +42,14 @@ public class SWTTableModel<T> implements TableModel<T> {
 	 * Constructor for TableModel
 	 * 
 	 * @param table table widget
-	 * @param properties properties of the Type <T> to be shown in the table columns
+	 * @param properties propertsetries of the Type <T> to be shown in the table columns
 	 */
 	public SWTTableModel(Table table) {
 		this.table = table;
 	}
 	
 	@Override
-	public void setRowStyler(RowStyler<T> rowStyler) {
+	public void setRowStyler(RowStyler<TableItem, T> rowStyler) {
 		this.rowStyler = rowStyler;
 	}
 

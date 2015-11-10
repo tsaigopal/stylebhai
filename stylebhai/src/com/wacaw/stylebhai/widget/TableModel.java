@@ -16,9 +16,10 @@ import java.util.List;
  * 
  * @author saigopal
  *
+ * @param <C> Table Row class
  * @param <T> value object class
  */
-public interface TableModel<T> extends WidgetWrapper {
+public interface TableModel<C, T> extends WidgetWrapper {
 
 	/**
 	 * Sets the RowStyler.
@@ -27,7 +28,7 @@ public interface TableModel<T> extends WidgetWrapper {
 	 * 
 	 * @param rowStyler
 	 */
-	public abstract void setRowStyler(RowStyler<T> rowStyler);
+	public abstract void setRowStyler(RowStyler<C, T> rowStyler);
 
 	/**
 	 * Sets the editable columns.

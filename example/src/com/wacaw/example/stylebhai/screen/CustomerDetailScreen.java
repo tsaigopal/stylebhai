@@ -21,7 +21,7 @@ public class CustomerDetailScreen extends AbstractScreen {
 	@Autowired
 	CustomerService service;
 	
-	private TableModel<Invoice> tblInvoices;
+	private TableModel<?, Invoice> tblInvoices;
 	Customer customer;
 	
 	TextBox lblCustId;
