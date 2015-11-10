@@ -4,5 +4,17 @@
 		<ToolBar class="com.wacaw.example.stylebhai.screen.CustomerSearchScreen" text="Customer Search" image="custsearch.gif"/>
 		<ToolBar class="com.wacaw.example.stylebhai.screen.CustomerDetailScreen" text="New Customer" image="cust.png"/>
 	</ToolBar>
+	<MenuBar>
+		<Menu text="Parent 1">
+			<Menu text="child 11"/>
+			<Menu text="child 12"/>
+			<Menu text="child 13"/>
+		</Menu>
+		<Menu text="Parent 2">
+			<Menu text="child 21"/>
+			<Menu text="child 22"/>
+			<Menu text="child 23"/>
+		</Menu>
+	</MenuBar>
 	<Content/>
 </Screen>

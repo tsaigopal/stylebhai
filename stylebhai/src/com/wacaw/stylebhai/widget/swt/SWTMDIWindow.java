@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IContributionManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.ApplicationWindow;
@@ -74,16 +77,30 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 			return;
 		}
 		for (WidgetConfig config: menuConfig.getChildren()) {
-			getMenuBarManager().add(createAction(config.getProperties()));
+			createAction(getMenuBarManager(), config);
+		}
+	}
+	
+	private void createAction(IContributionManager manager, WidgetConfig config) {
+		if (config.getChildren().size() > 0) {
+			MenuManager subMenu = new MenuManager(config.getProperties().get("text"));
+			manager.add(subMenu);
+			for (WidgetConfig childConfig : config.getChildren()) {
+				createAction(subMenu, childConfig);
+			}
+		} else {
+			manager.add(createAction(config.getProperties()));
 		}
 	}
 
 	protected Action createAction(final Map<String, String> menuProps) {
 		return new Action() {
 			{
-				setToolTipText(menuProps.get("text"));
+				setText(menuProps.get("text"));
 				setDescription(menuProps.get("description"));
-				setImageDescriptor(ImageDescriptor.createFromURL(this.getClass().getResource("/images/" + menuProps.get("image"))));
+				if (menuProps.get("image") != null) {
+					setImageDescriptor(ImageDescriptor.createFromURL(this.getClass().getResource("/images/" + menuProps.get("image"))));
+				}
 			}
 			@Override
 			public void run() {
