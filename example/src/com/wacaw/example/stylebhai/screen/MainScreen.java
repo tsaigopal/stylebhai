@@ -9,10 +9,6 @@ public class MainScreen extends AbstractScreen {
 	}
 
 	@Override
-	public void executeAction(String action) {
-	}
-
-	@Override
 	public void initialize(Object...objects) throws Exception {
 	}
 

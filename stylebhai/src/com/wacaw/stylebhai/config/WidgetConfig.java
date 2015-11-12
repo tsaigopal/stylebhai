@@ -31,6 +31,12 @@ public class WidgetConfig {
 	 * Other initializing properties, which are usually call as setters.
 	 */
 	private Map<String, String> properties = new HashMap<String, String>();
+	
+	/**
+	 * Represents additional data provided to the config.
+	 * 
+	 */
+	private String data;
 	/**
 	 * Configuration for the child widget, creating a tree of widgets (just like in any GUI framework)
 	 */
@@ -76,6 +82,14 @@ public class WidgetConfig {
 		this.children = children;
 	}
 	
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
 	/**
 	 * Returns the first child of the type, returns null if not found.
 	 * To be used when only one child of that type is expected.
@@ -105,5 +119,12 @@ public class WidgetConfig {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "WidgetConfig [id=" + id + ", type=" + type + ", styles="
+				+ styles + ", properties=" + properties + ", data=" + data
+				+ ", children=" + children + "]";
 	}
 }

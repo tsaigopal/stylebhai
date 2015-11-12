@@ -18,6 +18,9 @@ import com.wacaw.stylebhai.core.StylerException;
  * Factory class for creating {@link WidgetConfig} from xml files.
  * It searches the xml file with the same class name and package.
  * 
+ * The file extension is XML by default. If another implementation is required, then {@link #getFileExtension()} can be used
+ * to change and iherit the behaviour of this class.
+ * 
  * @author saigopal
  */
 public class XMLConfigFactory implements WidgetConfigFactory {
@@ -29,9 +32,13 @@ public class XMLConfigFactory implements WidgetConfigFactory {
 	}
 
 	private InputStream getStream(Class<?> clazz) {
-		String file = "/" + clazz.getName().replace('.', '/') + ".xml";
+		String file = "/" + clazz.getName().replace('.', '/') + "." + getFileExtension();
 		InputStream stream = this.getClass().getResourceAsStream(file);
 		return stream;
+	}
+	
+	protected String getFileExtension() {
+		return "xml";
 	}
 
 	@Override
@@ -59,6 +66,9 @@ public class XMLConfigFactory implements WidgetConfigFactory {
 			Node n = documentElement.getChildNodes().item(i);
 			if (n instanceof Element) {
 				config.getChildren().add(createConfig((Element) n, widgetCounters));
+			}
+			if (n.getNodeType() == Node.TEXT_NODE && n.getTextContent().trim().length() > 0) {
+				config.setData(n.getTextContent());
 			}
 		}
 		return config;

@@ -207,7 +207,10 @@ private static HashMap<Class<?>, Converter> converters = new HashMap<Class<?>, C
 		String[] constructorArgs = new String[0];
 		if (bracket > 0) {
 			layoutClassName = str.substring(0, bracket);
-			constructorArgs = str.substring(bracket+1, str.length()-1).split(",");
+			String argText = str.substring(bracket+1, str.length()-1);
+			if (argText.trim().length() > 0) {
+				constructorArgs = argText.split(",");
+			}
 		}
 		
 		try {

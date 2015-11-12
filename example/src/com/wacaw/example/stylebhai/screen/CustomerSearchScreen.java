@@ -30,11 +30,6 @@ public class CustomerSearchScreen extends AbstractScreen {
 	public void initialize(Object...params) {
 	}
 	
-	@Override
-	public void executeAction(String action) {
-		
-	}
-	
 	@EventListener(widget="btnSearch", eventType=UIEvent.Click)
 	public void searchCustomer() {
 		List<Customer> customers = service.searchCustomers(txtName.getText(), 

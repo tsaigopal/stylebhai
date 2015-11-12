@@ -42,7 +42,7 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 		screenConfig = WidgetBuilder.getConfig(screenClass);
 		addToolBar(SWT.FLAT | SWT.HORIZONTAL);
 		addMenuBar();
-		buildToolbar(screenConfig.getChild("ToolBar"));
+//		buildToolbar(screenConfig.getChild("ToolBar"));
 		buildMenubar(screenConfig.getChild("MenuBar"));
 		setBlockOnOpen(true);
 		open();
@@ -100,6 +100,7 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 				if (menuProps.get("image") != null) {
 					setImageDescriptor(ImageDescriptor.createFromURL(this.getClass().getResource("/images/" + menuProps.get("image"))));
 				}
+//				setAccelerator(SWT.);
 			}
 			@Override
 			public void run() {

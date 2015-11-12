@@ -5,10 +5,9 @@
 		<ToolBar class="com.wacaw.example.stylebhai.screen.CustomerDetailScreen" text="New Customer" image="cust.png"/>
 	</ToolBar>
 	<MenuBar>
-		<Menu text="Parent 1">
-			<Menu text="child 11"/>
-			<Menu text="child 12"/>
-			<Menu text="child 13"/>
+		<Menu text="Customer">
+			<Menu text="Customer Search" class="com.wacaw.example.stylebhai.screen.CustomerSearchScreen"/>
+			<Menu text="New Customer" class="com.wacaw.example.stylebhai.screen.CustomerDetailScreen"/>
 		</Menu>
 		<Menu text="Parent 2">
 			<Menu text="child 21"/>

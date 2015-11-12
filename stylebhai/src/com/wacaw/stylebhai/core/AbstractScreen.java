@@ -85,14 +85,15 @@ public abstract class AbstractScreen {
 	}
 
 	/**
-	 * Called on press of a button (in a dialog).
+	 * Called on press of a button (in a dialog), returns true if handled.
 	 * 
 	 * Must override if its for a Dialog screen to handle ok/cancel buttons.
 	 * 
 	 * @param action "ok" or "cancel" as per the button pressed.
+	 * @return true id handled by this method, false otherwize
 	 */
-	public void executeAction(String action) {
-		
+	public boolean executeAction(String action) {
+		return false;
 	}
 
 	/**
