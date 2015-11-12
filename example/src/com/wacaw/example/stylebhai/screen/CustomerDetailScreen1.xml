@@ -8,7 +8,7 @@
 	<Label style="LEFT" text="Date of Birth"/>
 	<DateTime id="dtDob" style="DATE,DROP_DOWN"/>
 	<Label style="LEFT" text="Pending"/>
-	<Label id="lblPending" style="LEFT"/>
+	<Label id="lblPending" style="LEFT">asdf</Label>
 	<Label style="LEFT" text=""/>
 	<Button id="btnSave" style="PUSH" text="Save"/>
 	<Table id="tblInvoices" style="FULL_SELECTION"

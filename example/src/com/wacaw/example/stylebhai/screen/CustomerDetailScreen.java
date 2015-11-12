@@ -35,11 +35,6 @@ public class CustomerDetailScreen extends AbstractScreen {
 	}
 
 	@Override
-	public void executeAction(String action) {
-		
-	}
-	
-	@Override
 	public void initialize(Object...params) throws Exception {
 		Integer custId = null;
 		if (params.length>0) {
@@ -61,7 +56,7 @@ public class CustomerDetailScreen extends AbstractScreen {
 		txtAddress.setText(customer.getAddress());
 		lblPending.setText(String.valueOf(customer.getBalance()));
 		dtDob.setDate(customer.getDob());
-		tblInvoices.setObjects(service.getInvoices(customer.getCustId()));
+//		tblInvoices.setObjects(service.getInvoices(customer.getCustId()));
 	}
 
 	@EventListener(widget="btnSave", eventType=UIEvent.Click)
@@ -78,7 +73,7 @@ public class CustomerDetailScreen extends AbstractScreen {
 		}
 	}
 	
-	@EventListener(widget="tblInvoices", eventType=UIEvent.DoubleClick)
+//	@EventListener(widget="tblInvoices", eventType=UIEvent.DoubleClick)
 	public void openInvoice() {
 		try {
 			getWindowHandle().getParent().openChild(null, tblInvoices.getSelection().getInvoiceId());

@@ -1,0 +1,37 @@
+<div>
+	<table>
+		<tr>
+			<td>Id</td>
+			<td id="lblCustId"></td>
+		</tr>
+		<tr>
+			<td>Name</td>
+			<td><input type="text" id="txtName"/></td>
+		</tr>
+		<tr>
+			<td>Address</td>
+			<td><input type="text" id="txtAddress"/></td>
+		</tr>
+		<tr>
+			<td>Date of Birth</td>
+			<td><input type="date" id="dtDob"/></td>
+		</tr>
+		<tr>
+			<td>Pending</td>
+			<td id="lblPending"></td>
+		</tr>
+		<tr>
+			<td><input type="button" id="btnSave" value="Save"/></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<grid id="tblInvoices">
+					<column data="data" text="Date" width="120" />
+					<column data="status" text="Status" width="170" />
+					<column data="roundedAmount" text="Amount" width="170" />
+					<column data="pendingAmount" text="Pending" width="170" />
+				</grid>
+			</td>
+		</tr>
+	</table>
+</div>

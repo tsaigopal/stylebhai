@@ -20,20 +20,24 @@ public class LoginScreen extends AbstractScreen {
 	}
 	
 	@Override
-	public void executeAction(String action) {
+	public boolean executeAction(String action) {
 		if (action.equals("ok")) {
 			try {
 				user = loginService.login(txtUser.getText(), txtPassword.getText());
 				this.setReturnValue(user);
 				this.getWindowHandle().close();
+				return true;
 			} catch(Exception e) {
 				e.printStackTrace();
 				getWindowHandle().showMessage("Error", "Invalid UserId/Password", e);
+				return true;
 			}
 		} else if (action.equals("cancel")) {
 			this.setReturnValue(null);
 			this.getWindowHandle().close();
+			return true;
 		}
+		return false;
 	}
 	
 	public User getUser() {
