@@ -3,7 +3,7 @@ framework for developing desktop apps with swt and spring
 
 #Features
 * SWT/JFace based GUI implementation
-* XML based screen design
+* XML/HTML/Properties based screen design
 * Annotation based event listeners
 * Autowire spring beans (services/DAO)
 * Maven projects
