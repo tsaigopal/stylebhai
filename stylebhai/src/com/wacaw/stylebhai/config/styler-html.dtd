@@ -1,0 +1,20 @@
+<!DOCTYPE STYLEBHAI [
+
+<!ELEMENT div (div*,table*,grid*)>
+<!ELEMENT table (tr+)>
+<!ELEMENT tr (td+)>
+<!ELEMENT td (div*,input*)>
+<!ELEMENT input (#PCDATA)>
+<!ELEMENT grid (column+)>
+
+<!ATTLIST div id CDATA #IMPLIED>
+<!ATTLIST table id CDATA #IMPLIED>
+<!ATTLIST td id CDATA #IMPLIED
+			colspan CDATA #IMPLIED>
+<!ATTLIST input id CDATA #IMPLIED
+ 			type CDATA #IMPLIED>
+<!ATTLIST grid id CDATA #IMPLIED>
+<!ATTLIST column data CDATA #REQUIRED
+	text CDATA #REQUIRED
+	width CDATA #REQUIRED>
+]>
