@@ -11,10 +11,8 @@ import java.util.Map.Entry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
@@ -22,6 +20,7 @@ import org.eclipse.swt.widgets.Widget;
 import com.wacaw.stylebhai.config.WidgetConfig;
 import com.wacaw.stylebhai.core.AbstractScreen;
 import com.wacaw.stylebhai.core.StylerException;
+import com.wacaw.stylebhai.event.EventHandler;
 import com.wacaw.stylebhai.event.EventListener;
 import com.wacaw.stylebhai.event.InterfaceSupport;
 import com.wacaw.stylebhai.event.ListenerInvocationHandler;
@@ -30,6 +29,9 @@ import com.wacaw.stylebhai.util.BeanUtility;
 import com.wacaw.stylebhai.util.Logger;
 import com.wacaw.stylebhai.widget.WidgetBuilder;
 import com.wacaw.stylebhai.widget.WidgetWrapper;
+import com.wacaw.stylebhai.widget.swt.event.AbstractEventListener;
+import com.wacaw.stylebhai.widget.swt.event.SWTKeyEventHandler;
+import com.wacaw.stylebhai.widget.swt.event.SWTMouseEventHandler;
 
 /**
  * Utility class for doing widget creation leg-work.
@@ -46,7 +48,7 @@ public class SWTWidgetUtils {
 	/**
 	 * static mapping of SWT events to styler events
 	 */
-	private static Map<UIEvent, Integer> eventTypes = new HashMap<>();
+	private static Map<UIEvent, AbstractEventListener> eventTypes = new HashMap<>();
 	static {
 		widgetToWraperMapping.put(Text.class, SWTText.class);
 		widgetToWraperMapping.put(Label.class, SWTText.class);
@@ -54,15 +56,14 @@ public class SWTWidgetUtils {
 		widgetToWraperMapping.put(Table.class, SWTTableModel.class);
 		widgetToWraperMapping.put(DateTime.class, SWTDateTime.class);
 		
-		eventTypes.put(UIEvent.Click, SWT.Selection);
-		eventTypes.put(UIEvent.MouseUp, SWT.MouseUp);
-		eventTypes.put(UIEvent.MouseDown, SWT.MouseDown);
-		eventTypes.put(UIEvent.DoubleClick, SWT.MouseDoubleClick);
-		eventTypes.put(UIEvent.KeyUp, SWT.KeyUp);
-		eventTypes.put(UIEvent.KeyDown, SWT.KeyDown);
-		
+		eventTypes.put(UIEvent.Click,  new SWTMouseEventHandler(SWT.Selection));
+		eventTypes.put(UIEvent.MouseUp, new SWTMouseEventHandler(SWT.MouseUp));
+		eventTypes.put(UIEvent.MouseDown, new SWTMouseEventHandler(SWT.MouseDown));
+		eventTypes.put(UIEvent.DoubleClick, new SWTMouseEventHandler(SWT.MouseDoubleClick));
+		eventTypes.put(UIEvent.KeyUp, new SWTKeyEventHandler(SWT.KeyUp));
+		eventTypes.put(UIEvent.KeyDown, new SWTKeyEventHandler(SWT.KeyDown));
+		eventTypes.put(UIEvent.Change, new SWTKeyEventHandler(SWT.Modify));
 	}
-	
 	
 	/**
 	 * Creates a widget as per the input config.
@@ -78,7 +79,7 @@ public class SWTWidgetUtils {
 	 * @throws Exception
 	 * @see {@link #getSWTConstructor(Class, Object)}
 	 */
-	public static void createWidget(WidgetConfig config, Widget parent, Map<String, Widget> mapToPopulate) throws Exception {
+	public static void createWidget(WidgetConfig config, Widget parent, Map<String, WidgetWrapper> mapToPopulate) throws Exception {
 		String widgetClassName = config.getType();
 		if (widgetClassName.indexOf('.') < 0) {
 			widgetClassName = "org.eclipse.swt.widgets." + widgetClassName;
@@ -98,7 +99,7 @@ public class SWTWidgetUtils {
 		Widget widgetInstance = (Widget) getSWTConstructor(widgetClass, parent)
 				.newInstance(parent, styleValue);
 		applyStyle(widgetInstance, config.getProperties());
-		mapToPopulate.put(config.getId(), widgetInstance);
+		mapToPopulate.put(config.getId(), createWrapperWidget(widgetInstance));
 		
 		for (WidgetConfig child : config.getChildren()) {
 			createWidget(child, widgetInstance, mapToPopulate);
@@ -156,9 +157,9 @@ public class SWTWidgetUtils {
 	 * @return map of widget isntance against their names, the map contains element "this" representing the container.
 	 * @throws Exception in case of excetion in parsing or widget creation
 	 */
-	public static Map<String, Widget> createContainer(Composite parent, Class<?> screenClass) throws Exception {
+	public static Map<String, WidgetWrapper> createContainer(Composite parent, Class<?> screenClass) throws Exception {
 		WidgetConfig config = WidgetBuilder.getConfig(screenClass);
-		Map<String, Widget> controlMapToUpdate = new HashMap<String, Widget>();
+		Map<String, WidgetWrapper> controlMapToUpdate = new HashMap<String, WidgetWrapper>();
 		createWidget(config, parent, controlMapToUpdate);
 		return controlMapToUpdate;
 	}
@@ -171,27 +172,41 @@ public class SWTWidgetUtils {
 	 * @param widgetMap map of widgets created
 	 * @param screenObject object instance of {@link AbstractScreen}
 	 */
-	public static void createListeners(Map<String, Widget> widgetMap, Object screenObject) {
+	public static void createListeners(Map<String, WidgetWrapper> widgetMap, Object screenObject) {
 		Method[] methods = screenObject.getClass().getMethods();
 		for (Method method : methods) {
 			EventListener el = method.getAnnotation(EventListener.class);
 			if (el != null) {
-				Listener l = (Listener) Proxy.newProxyInstance(screenObject.getClass().getClassLoader(),
-	                    new Class[] { Listener.class }, new ListenerInvocationHandler(screenObject, method));
+				EventHandler handler = (EventHandler) Proxy.newProxyInstance(screenObject.getClass().getClassLoader(),
+	                    new Class[] { EventHandler.class }, new ListenerInvocationHandler(screenObject, method));
 				try {
-					Widget field = widgetMap.get(el.widget());
-					Integer eventType = eventTypes.get(el.eventType());
-					if (eventType == null) {
-						eventType = Integer.parseInt(el.custom());
-					}
-					field.addListener(eventType, l);
+					addListener(widgetMap.get(el.widget()), el.eventType(), handler);
 				} catch (Exception e) {
 					Logger.log("listener not create for" + method.toString() , e);
 				}
 			}
 		}
 	}
+	
+	public static void addListener(WidgetWrapper widget, UIEvent event,
+			final EventHandler handler) {
+		AbstractEventListener listener = eventTypes.get(event);
+		((Widget) widget.getNativeWidget()).addListener(listener.getEventTyp(), listener.clone(handler));
+	}
 
+	public static WidgetWrapper createWrapperWidget(Widget widget) {
+		Class<?> wrapperClass = widgetToWraperMapping.get(widget.getClass());
+		if (wrapperClass != null) {
+			try {
+				return (WidgetWrapper) wrapperClass.getConstructors()[0].newInstance(widget);
+			} catch (Exception e) {
+				throw new StylerException("Error creating wrapper", e);
+			}
+		} else {
+			return new SWTWidget((Widget) widget);
+		}
+	}
+	
 	/**
 	 * Creates the wrapper widgets which are injected to AbstractScreen instance variables.
 	 * 
@@ -201,16 +216,7 @@ public class SWTWidgetUtils {
 	 */
 	public static WidgetWrapper createWrapperWidget(Map<String, Widget> widgetMap, String widgetName) {
 		Widget widget = widgetMap.get(widgetName);
-		Class<?> wrapperClass = widgetToWraperMapping.get(widget.getClass());
-		if (wrapperClass != null) {
-			try {
-				return (WidgetWrapper) wrapperClass.getConstructors()[0].newInstance(widget);
-			} catch (Exception e) {
-				throw new StylerException("Error creating wrapper", e);
-			}
-		} else {
-			return new SWTWidget((Control) widget);
-		}
+		return createWrapperWidget(widget);
 	}
 
 	/**
@@ -220,15 +226,14 @@ public class SWTWidgetUtils {
 	 * @param screenInstance screen instance
 	 * @throws Exception
 	 */
-	public static void populateWrappersInInstance(Map<String, Widget> widgetMap,
+	public static void populateWrappersInInstance(Map<String, WidgetWrapper> widgetMap,
 			Object screenInstance) throws Exception {
 		Field[] fields = screenInstance.getClass().getDeclaredFields();
 		for (Field field : fields) {
-			Widget widget = widgetMap.get(field.getName());
+			WidgetWrapper widget = widgetMap.get(field.getName());
 			if (widget != null) {
 				field.setAccessible(true);
-				com.wacaw.stylebhai.widget.WidgetWrapper fieldValue = createWrapperWidget(widgetMap, field.getName());
-				field.set(screenInstance, fieldValue);
+				field.set(screenInstance, widget);
 			}
 		}
 	}
@@ -259,7 +264,7 @@ public class SWTWidgetUtils {
 			Composite parent)
 			throws Exception {
 		AbstractScreen screenObject = (AbstractScreen) screenClass.newInstance();
-		Map<String, Widget> widgetMap = createContainer(parent, screenClass);
+		Map<String, WidgetWrapper> widgetMap = createContainer(parent, screenClass);
 		createListeners(widgetMap, screenObject);
 		populateWrappersInInstance(widgetMap, screenObject);
 		InterfaceSupport.setupInterfaceHandlers(screenObject);

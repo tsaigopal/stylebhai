@@ -112,4 +112,8 @@ public abstract class AbstractScreen {
 	public String getIcon() {
 		return icon;
 	}
+	
+	public void postCreate() {
+		
+	}
 }

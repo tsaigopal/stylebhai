@@ -15,5 +15,4 @@ public enum UIEvent {
 	KeyDown,
 	Change,
 	Native;
-	
 }

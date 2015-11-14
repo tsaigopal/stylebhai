@@ -17,4 +17,8 @@ public interface WidgetWrapper {
 	boolean isVisible();
 	
 	Object getNativeWidget();
+
+	Object getValue();
+	void setValue(Object value);
+	Class<?> getSupportedType();
 }

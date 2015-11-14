@@ -49,7 +49,7 @@ public class BeanUtility {
 	public static String getPropertyAsString(Object input, String propertyName) {
 		Object value = getProperty(input, propertyName);
 		if (value == null) return "";
-		return ConverterUtil.convertBack(value, value.getClass());
+		return ConverterUtil.convertBack(value);
 	}
 	
 	/**

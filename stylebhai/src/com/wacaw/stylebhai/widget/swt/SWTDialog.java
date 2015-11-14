@@ -13,6 +13,7 @@ import com.wacaw.stylebhai.core.AbstractScreen;
 import com.wacaw.stylebhai.core.StylerException;
 import com.wacaw.stylebhai.widget.Dialog;
 import com.wacaw.stylebhai.widget.MDIWindow;
+import com.wacaw.stylebhai.widget.WidgetWrapper;
 
 public class SWTDialog extends org.eclipse.jface.dialogs.Dialog implements Dialog {
 	private Class<? extends AbstractScreen> screenClass;
@@ -74,7 +75,7 @@ public class SWTDialog extends org.eclipse.jface.dialogs.Dialog implements Dialo
 	}
 
 	@Override
-	public Object getWidget(String widgetName) {
+	public WidgetWrapper getWidget(String widgetName) {
 		return window.getWidget(widgetName);
 	}
 
@@ -87,16 +88,6 @@ public class SWTDialog extends org.eclipse.jface.dialogs.Dialog implements Dialo
 		this.parent = parent;
 	}
 	
-	@Override
-	public void setVisible(boolean visible) {
-		//TODO setvisible
-	}
-
-	@Override
-	public boolean isVisible() {
-		return true;
-	}
-
 	@Override
 	public Object getNativeWidget() {
 		return window.getNativeWidget();

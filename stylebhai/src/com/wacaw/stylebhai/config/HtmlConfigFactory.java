@@ -131,7 +131,7 @@ public class HtmlConfigFactory extends XMLConfigFactory {
 				if (td.getProperties().get("colspan") != null) {
 					int colSpan = Integer.parseInt(td.getProperties().get("colspan"));
 					thisRowColumns += (colSpan-1);
-					child.getProperties().put("layoutData", "GridData(4,4,true,false," + colSpan + ",1)");
+					child.getProperties().put("layoutData", "GridData(4,4,true,true," + colSpan + ",1)");
 				}
 			}
 			for (;thisRowColumns < columns; thisRowColumns++) {

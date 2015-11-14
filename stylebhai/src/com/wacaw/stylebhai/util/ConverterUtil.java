@@ -186,8 +186,9 @@ private static HashMap<Class<?>, Converter> converters = new HashMap<Class<?>, C
 	 * @param type desired type
 	 * @return converted value into the desired type
 	 */
-	public static String convertBack(Object value, Class<?> type) {
-		Converter converter = findConverter(type);
+	public static String convertBack(Object value) {
+		if (value == null) return null;
+		Converter converter = findConverter(value.getClass());
 		return converter.convertBack(value);
 	}
 

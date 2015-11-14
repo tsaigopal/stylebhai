@@ -10,6 +10,8 @@ import com.wacaw.stylebhai.config.WidgetConfigFactory;
 import com.wacaw.stylebhai.config.XMLConfigFactory;
 import com.wacaw.stylebhai.core.AbstractScreen;
 import com.wacaw.stylebhai.core.StylerException;
+import com.wacaw.stylebhai.event.EventHandler;
+import com.wacaw.stylebhai.event.UIEvent;
 import com.wacaw.stylebhai.widget.swt.SWTWidgetBuilder;
 
 /**
@@ -52,4 +54,6 @@ public abstract class WidgetBuilder {
 	public static WidgetBuilder getSWTWidgetBuilder() {
 		return new SWTWidgetBuilder();
 	}
+	
+	public abstract void addListener(WidgetWrapper widget, UIEvent event, EventHandler handler);
 }

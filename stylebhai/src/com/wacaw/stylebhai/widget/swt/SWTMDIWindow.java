@@ -25,6 +25,7 @@ import com.wacaw.stylebhai.core.AbstractScreen;
 import com.wacaw.stylebhai.util.Logger;
 import com.wacaw.stylebhai.widget.MDIWindow;
 import com.wacaw.stylebhai.widget.WidgetBuilder;
+import com.wacaw.stylebhai.widget.WidgetWrapper;
 import com.wacaw.stylebhai.widget.Window;
 
 public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
@@ -121,6 +122,7 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 		window.setParent(this);
 		AbstractScreen screenObject = window.getScreen();
 		bf.autowireBean(screenObject);
+		screenObject.postCreate();
 		screenObject.initialize(params);
 		composite.layout();
 		if (screenObject.getIcon() != null) {
@@ -168,16 +170,6 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 	}
 
 	@Override
-	public boolean isVisible() {
-		return getShell().isVisible();
-	}
-	
-	@Override
-	public void setVisible(boolean visible) {
-		getShell().setVisible(visible);
-	}
-	
-	@Override
 	public Object getNativeWidget() {
 		return getShell();
 	}
@@ -188,7 +180,7 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 	}
 
 	@Override
-	public Object getWidget(String widgetName) {
+	public WidgetWrapper getWidget(String widgetName) {
 		return null;
 	}
 
