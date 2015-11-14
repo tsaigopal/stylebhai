@@ -28,13 +28,16 @@ Lets get started with stylebhai.
 	}
 ```
 * Create the screen class, by extending AbstractBindableScreen<T>. Lets call it CustomerDetailScreen.
-Obviously we have to implement the abstract method initialize (we will talk the arguments later).
+Obviously we have to provide the default constructor and implement the abstract method initialize (we will talk the arguments later).
 so he is what it would look like
 ```
 	
 	package com.wacaw.stylebhai.example;
 	
 	public class CustomerDetailScreen extends AbstractBindableScreen<Customer> {
+		public CustomerDetailScreen() {
+			super("customer", null);  //specify title and icon name. won't worry about icon now, so just pass null.
+		}
 		public void initialize(Object...objects) throws Exception {
 			//lets create a customer which we will show to the users and set it as model.
 			Customer c = new Customer();
