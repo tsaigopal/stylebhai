@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -24,6 +25,21 @@ import com.wacaw.stylebhai.core.StylerException;
  * @author saigopal
  */
 public class XMLConfigFactory implements WidgetConfigFactory {
+
+	private DocumentBuilder docBuilder;
+
+	public XMLConfigFactory() {
+		try {
+			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			throw new StylerException("Error creating xml parser");
+		}
+		initDocBuilder(docBuilder);
+	}
+	
+	protected void initDocBuilder(DocumentBuilder docBuilder) {
+		
+	}
 
 	@Override
 	public boolean canCreate(Class<?> clazz) {
@@ -46,8 +62,7 @@ public class XMLConfigFactory implements WidgetConfigFactory {
 		InputStream stream = getStream(className);
 		Document doc = null;
 		try {
-			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			doc = dBuilder.parse(stream);
+			doc = docBuilder.parse(stream);
 		} catch (Exception e) {
 			throw new StylerException(e);
 		}

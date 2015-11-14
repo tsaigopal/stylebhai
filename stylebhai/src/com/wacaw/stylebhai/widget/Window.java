@@ -1,12 +1,13 @@
 package com.wacaw.stylebhai.widget;
 
+
 /**
  * Class representing a window in a MDI application.
  * 
  * @author saigopal
  *
  */
-public interface Window extends WidgetWrapper {
+public interface Window {
 	/**
 	 * Creates a dialog instance for this window.
 	 * 
@@ -20,7 +21,9 @@ public interface Window extends WidgetWrapper {
 
 	boolean close();
 
-	Object getWidget(String widgetName);
+	WidgetWrapper getWidget(String widgetName);
 
 	MDIWindow getParent();
+
+	Object getNativeWidget();
 }

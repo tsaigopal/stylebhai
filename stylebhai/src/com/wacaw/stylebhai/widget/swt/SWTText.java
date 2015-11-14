@@ -15,6 +15,7 @@ public class SWTText extends SWTWidget implements TextBox {
 
 	@Override
 	public void setText(String text) {
+		text = (text == null) ? "" : text;
 		if (getNativeWidget() instanceof Text) {
 			Text textBox = (Text) getNativeWidget();
 			textBox.setText(text);
@@ -37,5 +38,20 @@ public class SWTText extends SWTWidget implements TextBox {
 		} else {
 			throw new StylerException("Unsupported operation");
 		}
+	}
+	
+	@Override
+	public Object getValue() {
+		return getText();
+	}
+	
+	@Override
+	public void setValue(Object value) {
+		setText((String) value);
+	}
+	
+	@Override
+	public Class<?> getSupportedType() {
+		return String.class;
 	}
 }

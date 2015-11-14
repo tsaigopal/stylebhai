@@ -2,11 +2,9 @@ package com.wacaw.stylebhai.widget.swt;
 
 import java.util.Map;
 
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Widget;
-
 import com.wacaw.stylebhai.core.AbstractScreen;
 import com.wacaw.stylebhai.widget.MDIWindow;
+import com.wacaw.stylebhai.widget.WidgetWrapper;
 import com.wacaw.stylebhai.widget.Window;
 
 /**
@@ -15,7 +13,7 @@ import com.wacaw.stylebhai.widget.Window;
  * @author saigopal
  */
 public class SWTWindow implements Window {
-	private Map<String, Widget> widgetMap;
+	private Map<String, WidgetWrapper> widgetMap;
 	private MDIWindow parent;
 	private AbstractScreen screen;
 	
@@ -38,31 +36,21 @@ public class SWTWindow implements Window {
 		this.parent = parent;
 	}
 
-	public Map<String, Widget> getWidgetMap() {
+	public Map<String, WidgetWrapper> getWidgetMap() {
 		return widgetMap;
 	}
 
-	public void setWidgetMap(Map<String, Widget> widgetMap) {
+	public void setWidgetMap(Map<String, WidgetWrapper> widgetMap) {
 		this.widgetMap = widgetMap;
 	}
 
 	@Override
-	public void setVisible(boolean visible) {
-		((Control) getNativeWidget()).setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return ((Control) getNativeWidget()).getVisible();
-	}
-
-	@Override
 	public Object getNativeWidget() {
-		return widgetMap.get("this");
+		return widgetMap.get("this").getNativeWidget();
 	}
 	
 	@Override
-	public Object getWidget(String widgetName) {
+	public WidgetWrapper getWidget(String widgetName) {
 		return widgetMap.get(widgetName);
 	}
 

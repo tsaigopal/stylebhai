@@ -38,4 +38,18 @@ public class SWTDateTime extends SWTWidget implements DateField {
 		return (DateTime)super.getNativeWidget();
 	}
 
+	@Override
+	public Object getValue() {
+		return getDate();
+	}
+	
+	@Override
+	public void setValue(Object value) {
+		setDate((Date) value);
+	}
+	
+	@Override
+	public Class<?> getSupportedType() {
+		return Date.class;
+	}
 }

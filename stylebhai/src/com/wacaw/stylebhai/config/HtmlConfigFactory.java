@@ -1,6 +1,29 @@
 package com.wacaw.stylebhai.config;
 
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 public class HtmlConfigFactory extends XMLConfigFactory {
+	@Override
+	protected void initDocBuilder(DocumentBuilder docBuilder) {
+		docBuilder.setEntityResolver(new EntityResolver() {
+		    @Override
+		    public InputSource resolveEntity(String publicId, String systemId)
+		            throws SAXException, IOException {
+		        if (systemId.contains("styler-html.dtd")) {
+		            return new InputSource(this.getClass().getResourceAsStream("styler-html.dtd"));
+		        } else {
+		            return null;
+		        }
+		    }
+		});
+	}
+	
 	@Override
 	protected String getFileExtension() {
 		return "html";
@@ -108,7 +131,7 @@ public class HtmlConfigFactory extends XMLConfigFactory {
 				if (td.getProperties().get("colspan") != null) {
 					int colSpan = Integer.parseInt(td.getProperties().get("colspan"));
 					thisRowColumns += (colSpan-1);
-					child.getProperties().put("layoutData", "GridData(4,4,true,false," + colSpan + ",1)");
+					child.getProperties().put("layoutData", "GridData(4,4,true,true," + colSpan + ",1)");
 				}
 			}
 			for (;thisRowColumns < columns; thisRowColumns++) {
