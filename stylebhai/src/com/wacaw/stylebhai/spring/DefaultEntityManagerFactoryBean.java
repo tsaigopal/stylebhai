@@ -2,6 +2,7 @@ package com.wacaw.stylebhai.spring;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Component;
+
+import com.wacaw.stylebhai.util.Logger;
 
 /**
  * Creates a default entity manager if already not created through spring configuration.
@@ -24,8 +27,11 @@ public class DefaultEntityManagerFactoryBean implements FactoryBean<EntityManage
 	@Override
 	public EntityManagerFactory getObject() throws Exception {
 		if (emFactory == null) {
-			emFactory = Persistence.createEntityManagerFactory(null);
-			
+			try {
+				emFactory = Persistence.createEntityManagerFactory(null);
+			} catch (PersistenceException pe) {
+				Logger.log("Error creating entity manager. It will not be available", pe);
+			}
 		}
 		return emFactory;
 	}
@@ -47,7 +53,7 @@ public class DefaultEntityManagerFactoryBean implements FactoryBean<EntityManage
 		emFactory = beanFactory.getBean(EntityManagerFactory.class);
 		} catch (Exception e) 
 		{
-			//bean not found
+			Logger.log("Bean factory not found.. creating one", e);
 		}
 		
 		System.out.println("emFactory:" + emFactory);

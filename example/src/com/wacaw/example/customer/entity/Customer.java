@@ -1,4 +1,4 @@
-package com.wacaw.example.stylebhai.entity;
+package com.wacaw.example.customer.entity;
 
 import java.util.Date;
 

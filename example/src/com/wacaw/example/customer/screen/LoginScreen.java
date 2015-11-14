@@ -1,9 +1,9 @@
-package com.wacaw.example.stylebhai.screen;
+package com.wacaw.example.customer.screen;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wacaw.example.stylebhai.entity.User;
-import com.wacaw.example.stylebhai.service.LoginService;
+import com.wacaw.example.customer.entity.User;
+import com.wacaw.example.customer.service.LoginService;
 import com.wacaw.stylebhai.core.AbstractScreen;
 import com.wacaw.stylebhai.widget.TextBox;
 

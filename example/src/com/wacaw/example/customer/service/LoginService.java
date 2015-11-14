@@ -1,10 +1,10 @@
-package com.wacaw.example.stylebhai.service;
+package com.wacaw.example.customer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wacaw.example.stylebhai.dao.LoginDAO;
-import com.wacaw.example.stylebhai.entity.User;
+import com.wacaw.example.customer.dao.LoginDAO;
+import com.wacaw.example.customer.entity.User;
 
 @Service
 public class LoginService {

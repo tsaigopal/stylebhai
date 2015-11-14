@@ -8,7 +8,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -99,7 +98,7 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 				setText(menuProps.get("text"));
 				setDescription(menuProps.get("description"));
 				if (menuProps.get("image") != null) {
-					setImageDescriptor(ImageDescriptor.createFromURL(this.getClass().getResource("/images/" + menuProps.get("image"))));
+					setImageDescriptor(SWTWidgetUtils.getImage(menuProps.get("image")));
 				}
 //				setAccelerator(SWT.);
 			}
@@ -118,13 +117,9 @@ public class SWTMDIWindow extends ApplicationWindow implements MDIWindow {
 	public Window openChild(Class<? extends AbstractScreen> screenClass, Object... params) throws Exception {
 		CTabItem tabItem = createTab();
 		Composite composite = (Composite)tabItem.getControl();
-		SWTWindow window = SWTWidgetUtils.createScreen(screenClass, composite);
+		SWTWindow window = SWTWidgetUtils.createScreen(screenClass, composite, params, bf);
 		window.setParent(this);
 		AbstractScreen screenObject = window.getScreen();
-		bf.autowireBean(screenObject);
-		screenObject.postCreate();
-		screenObject.initialize(params);
-		composite.layout();
 		if (screenObject.getIcon() != null) {
 			tabItem.setImage(new Image(tablFolder.getDisplay(), 
 					this.getClass().getResourceAsStream("/images/"+screenObject.getIcon())));

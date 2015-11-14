@@ -1,8 +1,8 @@
-package com.wacaw.example.stylebhai.dao;
+package com.wacaw.example.customer.dao;
 
 import java.util.List;
 
-import com.wacaw.example.stylebhai.entity.Invoice;
+import com.wacaw.example.customer.entity.Invoice;
 
 public interface InvoiceDAO {
 

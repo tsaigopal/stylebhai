@@ -1,8 +1,8 @@
-package com.wacaw.example.stylebhai.dao;
+package com.wacaw.example.customer.dao;
 
 import java.util.List;
 
-import com.wacaw.example.stylebhai.entity.Customer;
+import com.wacaw.example.customer.entity.Customer;
 
 public interface CustomerDAO {
 	Customer findOne(int custId);

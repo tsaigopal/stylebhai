@@ -55,9 +55,8 @@ public class SWTDialog extends org.eclipse.jface.dialogs.Dialog implements Dialo
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		try {
-			window = SWTWidgetUtils.createScreen(screenClass, parent);
+			window = SWTWidgetUtils.createScreen(screenClass, parent, null, bf);
 			window.getScreen().setWindowHandle(this);
-			bf.autowireBean(window.getScreen());
 			return (Control) window.getNativeWidget();
 		} catch (Exception e) {
 			throw new StylerException(e);

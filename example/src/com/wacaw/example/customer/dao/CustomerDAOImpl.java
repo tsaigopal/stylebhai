@@ -1,4 +1,4 @@
-package com.wacaw.example.stylebhai.dao;
+package com.wacaw.example.customer.dao;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import com.wacaw.example.stylebhai.entity.Customer;
-import com.wacaw.example.stylebhai.entity.Customer_;
+import com.wacaw.example.customer.entity.Customer;
+import com.wacaw.example.customer.entity.Customer_;
 import com.wacaw.stylebhai.util.MiscUtils;
 
 @Repository

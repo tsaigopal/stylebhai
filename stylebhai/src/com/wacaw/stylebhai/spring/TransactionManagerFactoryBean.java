@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Component;
 
+import com.wacaw.stylebhai.util.Logger;
+
 @Component("transactionManagerFactoryBean")
 public class TransactionManagerFactoryBean  implements FactoryBean<JpaTransactionManager>, BeanFactoryAware {
 	
@@ -20,7 +22,7 @@ public class TransactionManagerFactoryBean  implements FactoryBean<JpaTransactio
 	
 	@Override
 	public JpaTransactionManager getObject() throws Exception {
-		if (transactionManager == null) {
+		if (transactionManager == null && emFactory != null) {
 			transactionManager = new JpaTransactionManager(emFactory);
 		}
 		return transactionManager;
@@ -42,7 +44,7 @@ public class TransactionManagerFactoryBean  implements FactoryBean<JpaTransactio
 		try {
 			transactionManager = beanFactory.getBean(JpaTransactionManager.class);
 		} catch (Exception e) {
-			//not found
+			Logger.log("Transaction Manager not found.. creating one", e);
 		}
 		System.out.println("trxMananger:" + emFactory);
 	}

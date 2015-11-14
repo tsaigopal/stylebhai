@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+import com.wacaw.stylebhai.core.StylerException;
 import com.wacaw.stylebhai.util.BeanUtility;
 import com.wacaw.stylebhai.widget.RowStyler;
 import com.wacaw.stylebhai.widget.TableModel;
@@ -112,7 +113,7 @@ public class SWTTableModel<T> implements TableModel<TableItem, T> {
 							updateRow(ti, (T) ti.getData());
 						}
 					} catch (Exception e) {
-						// TODO change to validation
+						throw new StylerException(e);
 					}
 				}
 			};

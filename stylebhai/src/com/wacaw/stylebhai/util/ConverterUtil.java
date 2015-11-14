@@ -230,8 +230,7 @@ private static HashMap<Class<?>, Converter> converters = new HashMap<Class<?>, C
 			}
 			return constructor.newInstance(params);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			throw new StylerException(e);
 		}
 	}
 

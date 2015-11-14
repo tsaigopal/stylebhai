@@ -1,4 +1,4 @@
-package com.wacaw.example.stylebhai.screen;
+package com.wacaw.example.customer.screen;
 
 import com.wacaw.stylebhai.core.AbstractScreen;
 

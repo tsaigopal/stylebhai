@@ -1,11 +1,11 @@
-package com.wacaw.example.stylebhai.dao;
+package com.wacaw.example.customer.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import com.wacaw.example.stylebhai.entity.User;
+import com.wacaw.example.customer.entity.User;
 
 @Repository
 public class LoginDAO {

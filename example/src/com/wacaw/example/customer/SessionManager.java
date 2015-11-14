@@ -1,6 +1,6 @@
-package com.wacaw.example.stylebhai;
+package com.wacaw.example.customer;
 
-import com.wacaw.example.stylebhai.entity.User;
+import com.wacaw.example.customer.entity.User;
 
 public class SessionManager {
 	static User user;

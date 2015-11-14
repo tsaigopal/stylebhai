@@ -1,10 +1,10 @@
-package com.wacaw.example.stylebhai.screen;
+package com.wacaw.example.customer.screen;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wacaw.example.stylebhai.entity.Customer;
-import com.wacaw.example.stylebhai.entity.Invoice;
-import com.wacaw.example.stylebhai.service.CustomerService;
+import com.wacaw.example.customer.entity.Customer;
+import com.wacaw.example.customer.entity.Invoice;
+import com.wacaw.example.customer.service.CustomerService;
 import com.wacaw.stylebhai.core.AbstractBindableScreen;
 import com.wacaw.stylebhai.event.EventListener;
 import com.wacaw.stylebhai.event.UIEvent;
@@ -43,7 +43,7 @@ public class CustomerDetailScreen extends AbstractBindableScreen<Customer> {
 		setModel(saved); 
 	}
 	
-//	@EventListener(widget="tblInvoices", eventType=UIEvent.DoubleClick)
+	@EventListener(widget="invoices", eventType=UIEvent.DoubleClick)
 	public void openInvoice() {
 		try {
 			getWindowHandle().getParent().openChild(null, invoices.getSelection().getInvoiceId());

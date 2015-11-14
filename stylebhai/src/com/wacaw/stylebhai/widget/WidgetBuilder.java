@@ -36,6 +36,8 @@ public abstract class WidgetBuilder {
 	 */
 	public abstract MDIWindow createMDIWindow(Class<? extends AbstractScreen> screenClass);
 
+	public abstract Window createWindow(Class<? extends AbstractScreen> screenClass);
+
 	public abstract Object createDialog(Class<? extends AbstractScreen> screenClass);
 	
 //	public abstract Object openDialog(Class<? extends AbstractScreen> screenClass);

@@ -1,11 +1,11 @@
-package com.wacaw.example.stylebhai;
+package com.wacaw.example.customer;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.wacaw.example.stylebhai.entity.User;
-import com.wacaw.example.stylebhai.screen.LoginScreen;
-import com.wacaw.example.stylebhai.screen.MainScreen;
+import com.wacaw.example.customer.entity.User;
+import com.wacaw.example.customer.screen.LoginScreen;
+import com.wacaw.example.customer.screen.MainScreen;
 import com.wacaw.stylebhai.core.StylerApp;
 import com.wacaw.stylebhai.core.UILauncher;
 import com.wacaw.stylebhai.widget.WidgetBuilder;

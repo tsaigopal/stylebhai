@@ -3,6 +3,7 @@ package com.wacaw.stylebhai.event;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.wacaw.stylebhai.core.StylerException;
 import com.wacaw.stylebhai.util.Logger;
 
 /**
@@ -41,7 +42,7 @@ public class InterfaceSupport {
 				success = true;
 			}
 		} catch (Exception e) {
-			Logger.log("error registering interface:" + intf, e);
+			throw new StylerException(e);
 		}
 		
 		return success;
@@ -66,7 +67,7 @@ public class InterfaceSupport {
 				success = true;
 			}
 		} catch (Exception e) {
-			Logger.log("error registering interface:" + intf, e);
+			throw new StylerException(e);
 		}
 		
 		return success;

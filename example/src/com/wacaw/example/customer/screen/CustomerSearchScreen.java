@@ -1,11 +1,11 @@
-package com.wacaw.example.stylebhai.screen;
+package com.wacaw.example.customer.screen;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wacaw.example.stylebhai.entity.Customer;
-import com.wacaw.example.stylebhai.service.CustomerService;
+import com.wacaw.example.customer.entity.Customer;
+import com.wacaw.example.customer.service.CustomerService;
 import com.wacaw.stylebhai.core.AbstractScreen;
 import com.wacaw.stylebhai.event.EventListener;
 import com.wacaw.stylebhai.event.UIEvent;

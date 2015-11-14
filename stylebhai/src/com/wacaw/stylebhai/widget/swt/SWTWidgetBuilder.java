@@ -10,6 +10,7 @@ import com.wacaw.stylebhai.event.UIEvent;
 import com.wacaw.stylebhai.widget.MDIWindow;
 import com.wacaw.stylebhai.widget.WidgetBuilder;
 import com.wacaw.stylebhai.widget.WidgetWrapper;
+import com.wacaw.stylebhai.widget.Window;
 
 /**
  * Class for creating shells with externalized styles and an elegant event
@@ -32,6 +33,11 @@ public class SWTWidgetBuilder extends WidgetBuilder {
 	@Override
 	public Object createDialog(final Class<? extends AbstractScreen> screenClass) {
 		return new SWTDialog(screenClass, factory).getReturnValue();
+	}
+
+	@Override
+	public Window createWindow(final Class<? extends AbstractScreen> screenClass) {
+		return new SWTShellWindow(screenClass, factory);
 	}
 
 	@Override

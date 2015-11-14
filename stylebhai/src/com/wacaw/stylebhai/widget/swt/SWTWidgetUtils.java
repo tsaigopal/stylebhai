@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -16,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 
 import com.wacaw.stylebhai.config.WidgetConfig;
 import com.wacaw.stylebhai.core.AbstractScreen;
@@ -26,7 +28,6 @@ import com.wacaw.stylebhai.event.InterfaceSupport;
 import com.wacaw.stylebhai.event.ListenerInvocationHandler;
 import com.wacaw.stylebhai.event.UIEvent;
 import com.wacaw.stylebhai.util.BeanUtility;
-import com.wacaw.stylebhai.util.Logger;
 import com.wacaw.stylebhai.widget.WidgetBuilder;
 import com.wacaw.stylebhai.widget.WidgetWrapper;
 import com.wacaw.stylebhai.widget.swt.event.AbstractEventListener;
@@ -179,11 +180,11 @@ public class SWTWidgetUtils {
 			if (el != null) {
 				EventHandler handler = (EventHandler) Proxy.newProxyInstance(screenObject.getClass().getClassLoader(),
 	                    new Class[] { EventHandler.class }, new ListenerInvocationHandler(screenObject, method));
-				try {
-					addListener(widgetMap.get(el.widget()), el.eventType(), handler);
-				} catch (Exception e) {
-					Logger.log("listener not create for" + method.toString() , e);
+				WidgetWrapper widget = widgetMap.get(el.widget());
+				if (widget == null) {
+					throw new StylerException("CREATE.LISTENER:" + el.widget() + " doesn't exist");
 				}
+				addListener(widget, el.eventType(), handler);
 			}
 		}
 	}
@@ -191,7 +192,8 @@ public class SWTWidgetUtils {
 	public static void addListener(WidgetWrapper widget, UIEvent event,
 			final EventHandler handler) {
 		AbstractEventListener listener = eventTypes.get(event);
-		((Widget) widget.getNativeWidget()).addListener(listener.getEventTyp(), listener.clone(handler));
+		Widget nativeWidget = (Widget) widget.getNativeWidget();
+		nativeWidget.addListener(listener.getEventTyp(), listener.clone(handler));
 	}
 
 	public static WidgetWrapper createWrapperWidget(Widget widget) {
@@ -254,6 +256,8 @@ public class SWTWidgetUtils {
 	 * 
 	 * @param screenClass screen class
 	 * @param parent parent container
+	 * @param bf 
+	 * @param params 
 	 * @param params parameters, if any
 	 * @return
 	 * @throws InstantiationException
@@ -261,9 +265,13 @@ public class SWTWidgetUtils {
 	 * @throws Exception
 	 */
 	public static SWTWindow createScreen(Class<? extends AbstractScreen> screenClass,
-			Composite parent)
-			throws Exception {
-		AbstractScreen screenObject = (AbstractScreen) screenClass.newInstance();
+			Composite parent, Object[] params, AutowireCapableBeanFactory bf) throws Exception {
+		AbstractScreen screenObject = null;
+		try {
+			screenObject = (AbstractScreen) screenClass.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			new StylerException(screenClass + " must have a no-args constructor.", e);
+		}
 		Map<String, WidgetWrapper> widgetMap = createContainer(parent, screenClass);
 		createListeners(widgetMap, screenObject);
 		populateWrappersInInstance(widgetMap, screenObject);
@@ -273,6 +281,14 @@ public class SWTWidgetUtils {
 		window.setWidgetMap(widgetMap);
 		window.setScreen(screenObject);
 		screenObject.setWindowHandle(window);
+		bf.autowireBean(screenObject);
+		screenObject.postCreate();
+		screenObject.initialize(params);
+		parent.layout();
 		return window;
+	}
+
+	public static ImageDescriptor getImage(String path) {
+		return ImageDescriptor.createFromURL(SWTWidgetUtils.class.getResource("/images/" + path));
 	}
 }
